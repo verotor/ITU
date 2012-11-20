@@ -1,16 +1,16 @@
-// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.0
+//import QtWebKit 1.0
 import "menu/"
 
-/*
-  property string my_var0: "neco"  // bool real string
-  qsTr("some text") used for translation
-*/
+// qsTr("some text") used for translation
 
 Rectangle {
   id: win_main
   width: 1; height: 1;
   color: "#CC77FF"
+
+  /* FIXME a co treba velke "B" ve jmene souboru?|background */
+  background { }
 
   Column {
     anchors.centerIn: parent

@@ -44,3 +44,4 @@ private:
 QApplication *createApplication(int &argc, char **argv);
 
 #endif // QMLAPPLICATIONVIEWER_H
+

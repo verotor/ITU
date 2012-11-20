@@ -172,3 +172,4 @@ QApplication *createApplication(int &argc, char **argv)
     return new QApplication(argc, argv);
 #endif
 }
+
