@@ -10,7 +10,9 @@ Rectangle {
   color: "#CC77FF"
 
   /* FIXME a co treba velke "B" ve jmene souboru?|background */
-  Background { }
+  Background {
+    Help { }
+  }
 
   Column {
     anchors.centerIn: parent

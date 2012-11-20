@@ -1,16 +1,16 @@
 import QtQuick 1.0
-import QtWebKit 1.0
 
 Rectangle {
   id: myBackground
 
   // value >0 needed (although not used because of fullscreen)
-  width: 75; height: 75
+  //width: 75; height: 75
   //color: "white"
   opacity: 1.0
+  anchors.fill: parent
 
   function randomImage() {
-    return "../../../img/background/"+Math.floor((Math.random()*13)+1)+".jpg";
+    return "../../img/background/"+Math.floor((Math.random()*13)+1)+".jpg";
   }
 
   Image {
@@ -27,34 +27,6 @@ Rectangle {
      animateA.start();
      animateB.start();*/
   }
-
-  WebView {
-    id: translationsList
-
-    anchors {
-      topMargin:60
-      bottomMargin:60
-      leftMargin: 60
-      rightMargin: 60
-      bottom:parent.bottom
-      right:parent.right
-      left:parent.left
-      top:parent.top
-    }
-
-    url: Qt.resolvedUrl( "html/index.html" )
-  }
-
-  /* url: Qt.resolvedUrl( "html/index.html" )
-    x: 0
-    y: 0
-    smooth: false
-    anchors {
-      top: window.top
-      bottom: window.bottom
-      left: window.left
-      right: window.right
-    }*/
 
   /*function nextImage(){
      flashingblob.state = "autoChange";
