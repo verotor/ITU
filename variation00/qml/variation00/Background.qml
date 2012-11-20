@@ -2,19 +2,19 @@ import QtQuick 1.0
 import QtWebKit 1.0
 
 Rectangle {
-  id: background
+  id: myBackground
 
   // value >0 needed (although not used because of fullscreen)
   width: 75; height: 75
   //color: "white"
   opacity: 1.0
 
-  function randomImage(){
-    return "Images/background/"+Math.floor((Math.random()*13)+1)+".jpg";
+  function randomImage() {
+    return "../../../img/background/"+Math.floor((Math.random()*13)+1)+".jpg";
   }
 
   Image {
-    id: background
+    id: backImg
     anchors.fill: parent
     source: randomImage()
   }
@@ -22,31 +22,30 @@ Rectangle {
   Timer {
     id: bckTimer
     interval: 5000; running: true; repeat: true
-    onTriggered: {background.source = randomImage()}
+    onTriggered: {backImg.source = randomImage()}
     /*onTriggered: {  nextImage();
      animateA.start();
      animateB.start();*/
-   }
+  }
 
+  WebView {
+    id: translationsList
 
-   WebView {
-     id: translationsList
+    anchors {
+      topMargin:60
+      bottomMargin:60
+      leftMargin: 60
+      rightMargin: 60
+      bottom:parent.bottom
+      right:parent.right
+      left:parent.left
+      top:parent.top
+    }
 
-     anchors {
-       topMargin:60
-       bottomMargin:60
-       leftMargin: 60
-       rightMargin: 60
-       bottom:parent.bottom
-       right:parent.right
-       left:parent.left
-       top:parent.top
-     }
+    url: Qt.resolvedUrl( "html/index.html" )
+  }
 
-     url: Qt.resolvedUrl( "html/index.html" )
-   }
-
-   /* url: Qt.resolvedUrl( "html/index.html" )
+  /* url: Qt.resolvedUrl( "html/index.html" )
     x: 0
     y: 0
     smooth: false
@@ -56,7 +55,6 @@ Rectangle {
       left: window.left
       right: window.right
     }*/
-  }
 
   /*function nextImage(){
      flashingblob.state = "autoChange";
@@ -64,14 +62,14 @@ Rectangle {
 
    states: State{
      name: "autoChange";
-     PropertyChanges { target: background; source:randomImage()}
+     PropertyChanges { target: backImg; source:randomImage()}
    }
 
    transitions: Transition {
      NumberAnimation { properties: "source"; duration: 500; easing.type: Easing.InOutQuad  }
    }*/
 
-   /*MouseArea {
+  /*MouseArea {
       anchors.fill: parent
       onClicked: {
         animateColor.start()
@@ -97,5 +95,6 @@ Rectangle {
       }
     }
   }*/
+}
 
 // vim: set ft=javascript:
