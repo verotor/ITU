@@ -5,6 +5,10 @@ import "menu/"
 
 // qsTr("some text") used for translation
 
+// mouse click
+//   na obrazek -> zmizet (menu_exit + copyright + PAUSE)
+//   na ikony menu_exit/menu_main spusti animaci a otevre prislusna submenu
+
 Rectangle {
   id: win_main
   width: 1; height: 1;
@@ -93,33 +97,49 @@ Rectangle {
     }
   }
 
-  //FIXME pridat bublinovou napovedu? (ta by vsak byla na skodu -
-  //  prekazela by - na mobilnich zarizenich
-  MyMenu {
-    id: menu_exit;
-    anchors.bottom: parent.bottom
-    anchors.left: parent.left
-    width: win_main.height / 7; height: win_main.height / 7;
+  SubMenu {
+    id: menuExitSub0
+    width: menu_exit.width
+    height: menu_exit.height
+    midX: menu_exit.x + menu_exit.width/2
+    midY: menu_exit.y + menu_exit.height/2
+    x: midX
+    y: midY
+    opacity: 0
+
+    quadrant: 1
+    diameter: menu_exit.width * 1.09
+    angle: Math.PI/3
     icon: "menu_exit"
     onMouseClick: {
-      console.log("exit button pressed from main window")
-      //FIXME nejak rekurzivne zavrit cele menu!
-      subMExit00.visible = (subMExit00.visible) ? false : true
-      //Qt.quit();
+      console.log("exit submenu clicked\n")
+      Qt.quit();
     }
   }
 
-  SubMenu {
-    id: subMExit00
-    anchors.bottom: menu_exit.bottom
-    anchors.left: menu_exit.left
-    width: menu_exit.width / 1.2
-    height: menu_exit.height / 1.2
-
-    aimX: menu_exit.x + menu_exit.width
-    aimY: menu_exit.y - menu_exit.height
+  //FIXME pridat bublinovou napovedu? (ta by vsak byla na skodu -
+  //  prekazela by - na mobilnich zarizenich
+  MyMenu {
+    id: menu_exit
+    anchors {
+      bottom: parent.bottom
+      left: parent.left
+      leftMargin: 16
+      bottomMargin: 16
+    }
+    width: win_main.height / 9; height: win_main.height / 9;
     icon: "menu_exit"
-    onMouseClick: { console.log("exit submenu clicked\n" + subMExit00.x + " " + subMExit00.y) }
+    onMouseClick: {
+      //FIXME nejak rekurzivne zavrit cele menu!
+      if (menuExitSub0.closed)
+        menuExitSub0.closed = false
+      else
+        menuExitSub0.closed = true
+    }
+    //Component.onCompleted: {
+    //  menuExitSub0.midX = menu_exit.x + menu_exit.width/2
+    //  menuExitSub0.midY: menu_exit.y + menu_exit.height/2
+    //}
   }
 
   Text {
@@ -135,9 +155,13 @@ Rectangle {
 
   MyMenu {
     id: menu_main;
-    anchors.bottom: parent.bottom
-    anchors.right: parent.right
-    width: win_main.height / 6.2; height: win_main.height / 6.2;
+    anchors {
+      bottom: parent.bottom
+      right: parent.right
+      rightMargin: 16
+      bottomMargin: 16
+    }
+    width: win_main.height / 8; height: win_main.height / 8;
     icon: "menu_main"
 
     //FIXME testovani "pause"
@@ -153,29 +177,7 @@ Rectangle {
       from: 0
       to: 360
     }
-
-    /*
-    transform: Rotation {
-      id: testRotation
-      origin.x: myMenu.width / 2
-      origin.y: myMenu.height / 2;
-      angle: 15
-      Behavior on angle {
-        SpringAnimation { spring: 2; damping: 0.2; modulus: 360 }
-      }
-    }
-    */
   }
-
-  // pozadi == zasedla fotka (stretch)
-  // vlevo, uprostred, vpravo dole obrazky
-  //   pruhlednost zachovana
-  // uprostred (horizontalne, vertikalne) <bold red big pulsing text>PAUSE</><small black text>maly</>
-  // mouse hover
-  //   na ikony menu_exit/menu_main -> priblizeni/???
-  // mouse click
-  //   na obrazek -> zmizet (menu_exit + copyright + PAUSE)
-  //   na ikony menu_exit/menu_main spusti animaci a otevre prislusna submenu
 }
 
 /*

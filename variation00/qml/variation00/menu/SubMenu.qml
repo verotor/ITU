@@ -2,41 +2,108 @@ import QtQuick 1.0
 //import Qt.labs.particles 1.0
 
 MyMenu {
-  id: mySubMenu
-  visible: false
-  property int aimX: 0
-  property int aimY: 0
+  id: subMenu
+  visible: true
+  property bool closed: true
+  property int midX: 0
+  property int midY: 0
+
+  property int quadrant: 1 //?????????????????
+  property int diameter: 0
+  property real angle: 0
+
+  function getCoord(axis, closing) {
+    if (closing) {
+      return (axis == "x") ? subMenu.midX - subMenu.width/2 :
+                             subMenu.midY - subMenu.height/2
+    }
+    else {
+      var xx, yy
+      yy = Math.sin(subMenu.angle) * subMenu.diameter
+      xx = Math.sqrt(Math.pow(subMenu.diameter, 2) - Math.pow(yy, 2))
+
+      if (axis == "x")
+        return subMenu.midX + xx
+      else
+        return subMenu.midY - yy
+    }
+  }
+
+  onClosedChanged: {
+    if (behavX.running || behavY.running) return
+
+    if (closed) {
+      behavX.to = getCoord("x", true)
+      behavY.to = getCoord("y", true)
+      behavX.running = true
+      behavY.running = true
+      //FIXME zkusit zaroven opacity
+    }
+    else {
+      subMenu.opacity = 1
+      behavX.to = getCoord("x", false)
+      behavY.to = getCoord("y", false)
+      behavX.running = true
+      behavY.running = true
+    }
+  }
 
   /* FIXME submenu == menu, ktere pri zmene na visible vyjede a pri zmene na
      invisible zajede a pri stlaceni se jeste malinko promackne (zmensi se) */
-  Behavior on x {
+  SpringAnimation {
     id: behavX
-    enabled: false
-    SpringAnimation { spring: 4; damping: 0.1 }
+    target: subMenu
+    properties: "x"
+    spring: 10
+    damping: 0.4
+    onRunningChanged: {
+      if (!running && closed) subMenu.opacity = 0
+    }
   }
-
-  Behavior on y {
+  SpringAnimation {
     id: behavY
-    enabled: false
-    SpringAnimation { spring: 4; damping: 0.1 }
+    target: subMenu
+    properties: "y"
+    spring: 10
+    damping: 0.4
+    //onRunningChanged: {
+    //  console.log("to " + to.toString() + " HEEEEEEEEEEEEEEEEEEEEEEEEEJ")
+    //}
   }
+  //Behavior on x {
+  //  id: behavX
+  //  //enabled: true
+  //  SpringAnimation {
+  //    spring: 4
+  //    damping: 0.1
+  //  }
+  //}
 
-  onVisibleChanged: {
-    if (subMenu.visible) {
-      behavX.enabled = true
-      behavY.enabled = true
-      console.log("submenu visible")
-    }
-    else {
-      behavX.enabled = false
-      behavY.enabled = false
-      console.log("submenu INvisible")
-    }
-
-    var tmpx = x; var tmpy = y
-    x = aimX; y = aimY
-    aimX = tmpx; aimY = tmpy
-  }
+  //Behavior on y {
+  //  id: behavY
+  //  //enabled: true
+  //  SpringAnimation {
+  //    spring: 4
+  //    damping: 0.1
+  //    onRunningChanged: {
+  //      if (!running && subMenu.closed) subMenu.visible = false
+  //    }
+  //  }
+  //  //NumberAnimation {
+  //  //  id: fadeOut
+  //  //  target: topLayer
+  //  //  properties: "opacity"
+  //  //  to: 0
+  //  //  duration: myBg.fadeDuration
+  //  //  onRunningChanged: {
+  //  //    /* just finished animation */
+  //  //    if (!running && !paused) {
+  //  //      topLayer.source = bottomLayer.source
+  //  //      topLayer.opacity = 1
+  //  //    }
+  //  //  }
+  //  //}
+  //}
 }
 
 /*

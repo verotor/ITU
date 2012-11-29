@@ -25,7 +25,7 @@ Item {
     anchors {
       fill: parent;
       //fillMode: "PreserveAspectFit"
-      topMargin: 16; bottomMargin: 16; leftMargin: 16; rightMargin: 16
+      //topMargin: 16; bottomMargin: 16; leftMargin: 16; rightMargin: 16
     }
     //z: 2
     smooth: true
