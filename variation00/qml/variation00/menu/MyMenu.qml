@@ -1,12 +1,15 @@
 // import QtQuick 1.0 // to target S60 5th Edition or Maemo 5
 import QtQuick 1.0
 
-//FIXME transparency needed!!!
 Item {
   id: myMenu
   property string icon: "dummy"
   //property alias operation: buttonText.text
   signal mouseClick
+
+  function imgSrc(mode) {
+    return "../../../img/menu/" + myMenu.icon + mode.toString() + ".png"
+  }
 
   Rectangle {
     id: shade
@@ -26,17 +29,14 @@ Item {
     }
     //z: 2
     smooth: true
-    source: "../../../img/menu/" + icon + "0.png"
+    source: imgSrc(0)
     clip: false
   }
-
-  function clicked(abc) { console.log("clicked(): " + abc) }
 
   MouseArea {
     id: mouseArea
     anchors.fill: parent
     hoverEnabled: true
-    //onClicked: { clicked("zdarec") }
     onClicked: mouseClick()
   }
 
@@ -47,14 +47,14 @@ Item {
       when: mouseArea.pressed == true
       PropertyChanges { target: shade; opacity: .4 }
       PropertyChanges {
-        target: image; source: "../../../img/menu/" + icon + "0.png"
+        target: image; source: imgSrc(0)
       }
     },
     State {
       name: "mouse_onEntered"
       when: mouseArea.containsMouse == true
       PropertyChanges {
-        target: image; source: "../../../img/menu/" + icon + "1.png"
+        target: image; source: imgSrc(1)
       }
     }
   ]
