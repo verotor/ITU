@@ -1,39 +1,34 @@
 import QtQuick 1.0
 import QtWebKit 1.0
 
-/*
+
 Rectangle {
   id: myHelp
   width: 100
   height: 62
   anchors.fill: parent
-}
-*/
 
-WebView {
-  id: myHelp
 
+Flickable {
+  id: wtf00
+  width: parent.width
+  height: parent.height
+  contentWidth: web00.width
+  contentHeight: web00.height
+  interactive: true
   anchors {
-    topMargin:60
-    bottomMargin:60
-    leftMargin: 60
-    rightMargin: 60
-    bottom:parent.bottom
-    right:parent.right
-    left:parent.left
-    top:parent.top
-  }
+      left:parent.left
+   }
 
-  url: Qt.resolvedUrl( "html/index.html" )
-  /*
-    x: 0
-    y: 0
-    smooth: false
-    anchors {
-      top: window.top
-      bottom: window.bottom
-      left: window.left
-      right: window.right
+      WebView {
+       id: web00
+       url: Qt.resolvedUrl( "html/index.html" )
+       width: flashingblob.width
+       //height: win_main.height
+       //preferredWidth: flickable.width
+      //preferredHeight: flickable.height
+       x: 0
+       y: 0
     }
-    */
+  }
 }
