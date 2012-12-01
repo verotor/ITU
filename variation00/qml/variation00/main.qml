@@ -1,4 +1,4 @@
-import QtQuick 1.1
+import QtQuick 1.0
 import QtWebKit 1.0
 //import Effects 1.0
 import "menu/"
@@ -43,11 +43,6 @@ Rectangle {
     if (mainBg.isPaused) mainBg.isPaused = false
   }
 
-  /*
-  Help { }
-  */
-
-  /*
   Flickable {
     id: wtf00
     width: parent.width
@@ -55,20 +50,22 @@ Rectangle {
     contentWidth: web00.width
     contentHeight: web00.height
     interactive: true
-    //clip: true
+    anchors {
+        left:parent.left
+     }
 
-    WebView {
-      id: web00
-      url: "http://www.qtcentre.org/threads/46192-QML-webview-navigation"
-      width: win_main.width
-      //height: win_main.height
-      //preferredWidth: flickable.width
-      //preferredHeight: flickable.height
-      x: 0
-      y: 0
+        WebView {
+         id: web00
+         url: Qt.resolvedUrl( "html/index.html" )
+         width: win_main.width
+         //height: win_main.height
+         //preferredWidth: flickable.width
+        //preferredHeight: flickable.height
+         x: 0
+         y: 0
+      }
     }
-  }
-  */
+
 
   Column {
     id: pauseMsgs
