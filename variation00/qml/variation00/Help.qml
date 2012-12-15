@@ -20,7 +20,7 @@ Rectangle {
 
     WebView {
       id: web00
-      url: Qt.resolvedUrl( "html/index.html" )
+      url: Qt.resolvedUrl( "html/shop.html" )
       width: flashingblob.width
       //height: win_main.height
       //preferredWidth: flickable.width

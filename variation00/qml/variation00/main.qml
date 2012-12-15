@@ -81,6 +81,8 @@ Rectangle {
     text: "(c) Radek, Lukas, Honza"
   }
 
+  Help { }
+
 /*
   Flickable {
     id: wtf00
