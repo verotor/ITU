@@ -29,8 +29,13 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # Add dependency to Symbian components
 # CONFIG += qt-components
 
+# FIXME
+#QT += declarative
+#CONFIG += qt plugin
+
 # The .cpp file which was generated for your project. Feel free to hack it.
-SOURCES += main.cpp
+SOURCES += starmenu_plugin.cpp starmenu.cpp staritem.cpp main.cpp
+HEADERS += starmenu_plugin.h starmenu.h staritem.h
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)

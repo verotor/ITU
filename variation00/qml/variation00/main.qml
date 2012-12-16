@@ -2,6 +2,7 @@ import QtQuick 1.0
 import QtWebKit 1.0
 //import Effects 1.0
 import "menu/"
+import StarMenu 1.0
 
 // qsTr("some text") used for translation
 
@@ -81,7 +82,7 @@ Rectangle {
     text: "(c) Radek, Lukas, Honza"
   }
 
-  Help { }
+  //Help { }
 
 /*
   Flickable {
@@ -137,8 +138,6 @@ Rectangle {
     }
   }
 
-  //FIXME pridat bublinovou napovedu? (ta by vsak byla na skodu -
-  //  prekazela by - na mobilnich zarizenich
   MyMenu {
     id: menu_exit
     anchors {
@@ -185,6 +184,38 @@ Rectangle {
       loops: Animation.Infinite
       from: 0
       to: 360
+    }
+  }
+
+  StarMenu {
+    id: starMenu
+    objectName: "Menu1"
+    anchors.fill: menu_main
+    smooth: true
+    radiusH: 100
+    radiusV: 100
+    starCenterVisible: true
+    visualParent: win_main  // where to click to close starmenu
+    color: Qt.rgba(0, 0, 0, 0.5)
+
+    center.x: menu_main.width>>2
+    center.y: menu_main.height>>1
+
+    onStarMenuOpening: {
+      columnItem.ppx=center.x; columnItem.ppy=center.y;
+      textRect.z = starMenu.z;
+      textRect.text = "WTFFFFFFFFFFFFFFFFFFF?"
+    }
+
+    StarItem {
+      width: 64; height: 64
+      onClicked: console.log("HOVER ITEM STARITEM TEEXT CLICKED");
+
+      Image {
+        anchors.fill: parent; smooth: true
+        fillMode: Image.Stretch
+        source: "../../img/menu/menu_exit0.png"
+      }
     }
   }
 }
