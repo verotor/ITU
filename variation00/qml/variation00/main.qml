@@ -175,6 +175,28 @@ Rectangle {
       to: 360
     }
   }
+
+  TextBox {
+      id: textbox
+
+      SequentialAnimation on x {
+          id: movement
+          /*loops: Animation.Infinite*/
+          PropertyAnimation { to: 300 }
+          /*PropertyAnimation { to: -240 } zpatky*/
+      }
+  }
+
+  /* nasledujici obdelnik je jen testem pristupu k zadanemu textu v TextBox */
+  Rectangle {
+      x: 500
+      y: 300
+
+      Text {
+          id: textik
+          text: textbox.myContent
+      }
+  }
 }
 
 /*
