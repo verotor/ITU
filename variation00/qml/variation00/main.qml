@@ -2,6 +2,7 @@ import QtQuick 1.0
 import QtWebKit 1.0
 //import Effects 1.0
 import "menu/"
+import StarMenu 1.0
 
 // qsTr("some text") used for translation
 
@@ -43,30 +44,6 @@ Rectangle {
     if (mainBg.isPaused) mainBg.isPaused = false
   }
 
-  Flickable {
-    id: wtf00
-    width: parent.width
-    height: parent.height
-    contentWidth: web00.width
-    contentHeight: web00.height
-    interactive: true
-    anchors {
-        left:parent.left
-     }
-
-        WebView {
-         id: web00
-         url: Qt.resolvedUrl( "html/index.html" )
-         width: win_main.width
-         //height: win_main.height
-         //preferredWidth: flickable.width
-        //preferredHeight: flickable.height
-         x: 0
-         y: 0
-      }
-    }
-
-
   Column {
     id: pauseMsgs
     anchors.centerIn: parent
@@ -94,6 +71,53 @@ Rectangle {
     }
   }
 
+  Text {
+    id: copyrightMsg;
+    //anchors.horizontalCenter: parent
+    anchors.bottomMargin: 30
+    anchors.bottom: parent.bottom
+    anchors.horizontalCenter: parent.horizontalCenter
+    smooth: true
+    color: "#FF6633"
+    text: "(c) Radek, Lukas, Honza"
+  }
+
+  //Help { }
+
+/*
+  Flickable {
+    id: wtf00
+    interactive: true
+    visible: true
+
+    //contentWidth: web00.width
+    contentHeight: web00.height
+    anchors {
+      fill: parent
+      leftMargin: 70
+      rightMargin: 70
+      bottomMargin: 70
+      topMargin: 70
+    }
+
+    WebView {
+      id: web00
+      url: Qt.resolvedUrl( "http://www.bungie.net/projects/aerospace/crimson/content.aspx?link=crimson_screens" )
+      //url: Qt.resolvedUrl( "html/index.html" )
+      //anchors.fill: parent
+      //width: win_main.width - 50
+      //height: win_main.height - 50
+
+      //preferredWidth: flickable.width
+      //preferredHeight: flickable.height
+      preferredWidth: wtf00.width
+      preferredHeight: wtf00.height
+      //x: 0
+      //y: 0
+    }
+  }
+*/
+
   SubMenu {
     id: menuExitSub0
     width: menu_exit.width
@@ -114,8 +138,6 @@ Rectangle {
     }
   }
 
-  //FIXME pridat bublinovou napovedu? (ta by vsak byla na skodu -
-  //  prekazela by - na mobilnich zarizenich
   MyMenu {
     id: menu_exit
     anchors {
@@ -137,17 +159,6 @@ Rectangle {
     //  menuExitSub0.midX = menu_exit.x + menu_exit.width/2
     //  menuExitSub0.midY: menu_exit.y + menu_exit.height/2
     //}
-  }
-
-  Text {
-    id: copyrightMsg;
-    //anchors.horizontalCenter: parent
-    anchors.bottomMargin: 30
-    anchors.bottom: parent.bottom
-    anchors.horizontalCenter: parent.horizontalCenter
-    smooth: true
-    color: "#FF6633"
-    text: "(c) Radek, Lukas, Honza"
   }
 
   MyMenu {
@@ -173,6 +184,38 @@ Rectangle {
       loops: Animation.Infinite
       from: 0
       to: 360
+    }
+  }
+
+  StarMenu {
+    id: starMenu
+    objectName: "Menu1"
+    anchors.fill: menu_main
+    smooth: true
+    radiusH: 100
+    radiusV: 100
+    starCenterVisible: true
+    visualParent: win_main  // where to click to close starmenu
+    color: Qt.rgba(0, 0, 0, 0.5)
+
+    center.x: menu_main.width>>2
+    center.y: menu_main.height>>1
+
+    onStarMenuOpening: {
+      columnItem.ppx=center.x; columnItem.ppy=center.y;
+      textRect.z = starMenu.z;
+      textRect.text = "WTFFFFFFFFFFFFFFFFFFF?"
+    }
+
+    StarItem {
+      width: 64; height: 64
+      onClicked: console.log("HOVER ITEM STARITEM TEEXT CLICKED");
+
+      Image {
+        anchors.fill: parent; smooth: true
+        fillMode: Image.Stretch
+        source: "../../img/menu/menu_exit0.png"
+      }
     }
   }
 
